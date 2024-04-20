@@ -16,6 +16,12 @@ export const TYPES = {
     TodoDataSource: Symbol.for("TodoDataSources"),
     AuthDataSource: Symbol.for("AuthDataSources"),
 
+    TodoRepository: Symbol.for("TodoRepository"),
+    AuthRepository: Symbol.for("AuthRepository"),
+
+
+    AuthController: Symbol.for("AuthController"),
+    TodoController: Symbol.for("TodoController"),
 
 
 }
