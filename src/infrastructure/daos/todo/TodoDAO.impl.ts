@@ -5,6 +5,7 @@ import { UpdateTodoDTO } from "../../../domain/dtos/todo/UpdateTodo.dto";
 import { TodoData } from "../../../domain/model/Todo.data";
 import { PrismaClient } from "@prisma/client/extension";
 import { TYPES } from "../../../di/Types";
+import { CustomError } from "../../../domain/errors/custom.errors";
 
 
 
@@ -36,10 +37,12 @@ export class TodoDAOImpl implements TodoDAO {
             return todoData;
         });
     }
-    async get(id: string): Promise<TodoData | null> {
+    async get(id: string): Promise<TodoData> {
         const todo = await this.prismaClient.todo.findUnique({
             where: { id }
         });
+
+        if (!todo) throw CustomError.notFound("Todo no encontrado");
 
         const [error, todoData] = TodoData.create(todo);
 
