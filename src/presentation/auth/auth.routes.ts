@@ -7,14 +7,16 @@ import { AuthController } from "./auth.controller";
 
 export class AuthRoutes {
 
-    getRoutes() {
+    static get getRoutes() {
         const router = Router();
         const AuthController = myContainer.get<AuthController>(TYPES.AuthController);
 
 
         router.post('/login', AuthController.login);
+        router.post('/register', AuthController.register);
 
 
+        return router;
 
     }
 }

@@ -46,8 +46,19 @@ export class AuthDAOImpl implements AuthDAO {
     }
     async register(registerDTO: RegisterDTO): Promise<UserData> {
 
+        const userExists = await this.prismaClient.user.findUnique({
+            where: { email: registerDTO.email }
+        });
+
+        if (userExists) throw CustomError.badRequest("Usuario ya existe");
+
+        const password = await this.hash.hash(registerDTO.password);
+
         const user = await this.prismaClient.user.create({
-            data: registerDTO
+            data: {
+                ...registerDTO,
+                password
+            }
         });
 
         const [error, userData] = UserData.create(user);

@@ -1,8 +1,7 @@
 
 import "reflect-metadata";
 
-import { PrismaClient } from "@prisma/client/extension";
-import e from "express";
+import { PrismaClient } from "@prisma/client";
 import { Container } from "inversify";
 import { TYPES } from "./Types";
 import { Hasher } from "../adapters/hasher/hasher";
@@ -18,6 +17,8 @@ import { AuthRepositoImpl } from "../infrastructure/repository/auth/AuthReposito
 import { TodoDAOImpl } from "../infrastructure/daos/todo/TodoDAO.impl";
 import { TodoDAO } from "../domain/daos/todo/TodoDAO";
 import { TodoData } from "../domain/model/Todo.data";
+import { envs } from "../config/envs";
+import { AuthController } from "../presentation/auth/auth.controller";
 
 
 
@@ -25,7 +26,7 @@ import { TodoData } from "../domain/model/Todo.data";
 
 const myContainer = new Container();
 
-myContainer.bind<string>(TYPES.JWT_SECRET).toConstantValue('secret');
+myContainer.bind<string>(TYPES.JWT_SECRET).toConstantValue(envs.JWT_SECRET);
 
 myContainer.bind<PrismaClient>(TYPES.prisma).toConstantValue(new PrismaClient());
 
@@ -36,7 +37,7 @@ myContainer.bind<JWTSign>(TYPES.jwt).to(JWTSignAdapter).inSingletonScope();
 myContainer.bind<AuthDAO>(TYPES.AuthDAO).to(AuthDAOImpl).inSingletonScope();
 myContainer.bind<AuthDataSource>(TYPES.AuthDataSource).to(AuthDataSourceImpl).inSingletonScope();
 myContainer.bind<AuthRepository>(TYPES.AuthRepository).to(AuthRepositoImpl).inSingletonScope();
-
+myContainer.bind<AuthController>(TYPES.AuthController).to(AuthController).inSingletonScope();
 
 myContainer.bind<TodoDAO>(TYPES.TodoDAO).to(TodoDAOImpl).inSingletonScope();
 // myContainer.bind<TodoDataSource>(TYPES.TodoDataSource).to(TodoDataSourceImpl).inSingletonScope();

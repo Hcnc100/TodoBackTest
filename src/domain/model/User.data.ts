@@ -11,6 +11,7 @@ export class UserData {
     public static create(
         object: { [key: string]: any }
     ): [string?, UserData?] {
+        console.log(object);
         const { id, name, email, password } = object;
         if (!id) return ["El id es requerido"];
         if (!name) return ["El nombre es requerido"];
