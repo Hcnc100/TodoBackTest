@@ -11,4 +11,11 @@ export const TYPES = {
 
     TodoDAO: Symbol.for("TodoDAO"),
     AuthDAO: Symbol.for("AuthDAO"),
+
+
+    TodoDataSource: Symbol.for("TodoDataSources"),
+    AuthDataSource: Symbol.for("AuthDataSources"),
+
+
+
 }
