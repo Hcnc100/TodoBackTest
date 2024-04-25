@@ -1,0 +1,12 @@
+import { CreateTodoDTO } from "../dtos/todo/CreateTodo.dto";
+import { UpdateTodoDTO } from "../dtos/todo/UpdateTodo.dto";
+import { TodoData } from "../model/Todo.data";
+
+export interface TodoRepository {
+    getAll(): Promise<TodoData[]>;
+    getByUserId(userId: string): Promise<TodoData[]>;
+    get(id: string): Promise<TodoData>;
+    create(createTodoDTO: CreateTodoDTO): Promise<TodoData>;
+    update(updateTodoDTO: UpdateTodoDTO): Promise<TodoData>;
+    delete(id: string): Promise<void>;
+}
