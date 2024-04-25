@@ -13,7 +13,8 @@ export class CreateTodoUseCaseImpl implements CreateTodoUseCase {
         const response = await this.todoRepository.create(createTodoDTO);
         return {
             message: 'Todo created successfully',
-            data: {
+            userId: createTodoDTO.userId,
+            todo: {
                 id: response.id,
                 title: response.title,
                 description: response.description,

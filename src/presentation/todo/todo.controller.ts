@@ -52,15 +52,29 @@ export class TodoController {
     }
 
     public createTodo = (req: Request, res: Response) => {
-        const [error, createTodoDTO] = CreateTodoDTO.create(req.body);
 
-        if (error) {
-            return res.status(400).json({ message: error });
+        const [errorAuth, authToken] = AuthTokenData.createFromRequest(req);
+
+        if (errorAuth) {
+            return res.status(401).json({ message: errorAuth });
         }
 
-        new CreateTodoUseCaseImpl(this.todoRepository).execute(createTodoDTO!)
+
+        new GetUserByTokenImpl(this.authRepository).execute(authToken!)
+            .then((userData) => {
+                const [error, createdTodoDTO] = CreateTodoDTO.create(
+                    {
+                        ...req.body,
+                        userId: userData.id
+                    }
+                );
+
+                if (error) throw CustomError.badRequest(error);
+
+                return new CreateTodoUseCaseImpl(this.todoRepository).execute(createdTodoDTO);
+            })
             .then((response) => {
-                return res.status(201).json(response)
+                return res.status(201).json(response);
             })
             .catch((err) => this.handleErrors(err, res));
     }

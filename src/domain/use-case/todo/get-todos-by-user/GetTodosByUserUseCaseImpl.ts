@@ -22,7 +22,7 @@ export class GetTodosByUserUseCaseImpl implements GetTodosByUserUseCase {
 
         return {
             message: 'Todos found',
-            data: tasks,
+            todos: tasks,
             userId: userId
         }
     }
