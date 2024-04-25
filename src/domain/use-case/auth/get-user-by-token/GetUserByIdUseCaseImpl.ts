@@ -3,6 +3,8 @@ import { GetUserByIdUseCase } from "./GetUserByIdUseCase";
 import { AuthRepository } from '../../../repository/AuthRepository';
 import { TYPES } from "../../../../di/Types";
 import { inject } from "inversify";
+import { UserData } from "../../../model/User.data";
+import { AuthTokenData } from "../../../model/AuthTokenData";
 
 export class GetUserByTokenImpl implements GetUserByIdUseCase {
 
@@ -11,8 +13,8 @@ export class GetUserByTokenImpl implements GetUserByIdUseCase {
         private readonly authRepository: AuthRepository
     ) { }
 
-    execute(id: string): Promise<TodoData> {
-        throw new Error("Method not implemented.");
+    execute(authTokenData: AuthTokenData): Promise<UserData> {
+        return this.authRepository.getUserByToken(authTokenData);
     }
 
 }

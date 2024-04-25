@@ -5,6 +5,7 @@ import { TYPES } from '../../../di/Types';
 import { LoginDTO } from '../../../domain/dtos/auth/Login.dto';
 import { RegisterDTO } from '../../../domain/dtos/auth/Register.dto';
 import { UserData } from '../../../domain/model/User.data';
+import { AuthTokenData } from '../../../domain/model/AuthTokenData';
 
 
 @injectable()
@@ -21,8 +22,8 @@ export class AuthDataSourceImpl implements AuthDataSource {
     register(registerDTO: RegisterDTO): Promise<UserData> {
         return this.authDAO.register(registerDTO);
     }
-    getUserByToken(token: string): Promise<UserData> {
-        return this.authDAO.getUserByToken(token);
+    getUserByToken(authTokenData: AuthTokenData): Promise<UserData> {
+        return this.authDAO.getUserByToken(authTokenData);
     }
 
 

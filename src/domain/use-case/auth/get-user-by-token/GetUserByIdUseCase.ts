@@ -1,5 +1,6 @@
-import { TodoData } from "../../../model/Todo.data";
+import { AuthTokenData } from "../../../model/AuthTokenData";
+import { UserData } from "../../../model/User.data";
 
 export interface GetUserByIdUseCase {
-    execute(id: string): Promise<TodoData>;
+    execute(authTokenData: AuthTokenData): Promise<UserData>;
 }

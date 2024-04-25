@@ -9,6 +9,7 @@ import { Hash } from "crypto";
 import { HasherAdapter } from "../../../adapters/hasher/bcrypt.adapter";
 import { JWTSignAdapter } from "../../../adapters/jwt/jwtSign.adapter";
 import { CustomError } from "../../../domain/errors/custom.errors";
+import { AuthTokenData } from "../../../domain/model/AuthTokenData";
 
 @injectable()
 export class AuthDAOImpl implements AuthDAO {
@@ -68,7 +69,8 @@ export class AuthDAOImpl implements AuthDAO {
         return userData;
     }
 
-    async getUserByToken(token: string): Promise<UserData> {
+    async getUserByToken(authTokenData: AuthTokenData): Promise<UserData> {
+        const { token } = authTokenData;
         const idUser = await this.jwt.verify<{ idUser: string }>(token);
 
         if (!idUser) throw CustomError.unauthorized("Token invalido");

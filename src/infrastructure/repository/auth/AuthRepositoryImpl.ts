@@ -5,6 +5,7 @@ import { UserData } from '../../../domain/model/User.data';
 import { AuthRepository } from '../../../domain/repository/AuthRepository';
 import { AuthDataSource } from '../../../domain/datasource/auth/AuthDataSource';
 import { TYPES } from '../../../di/Types';
+import { AuthTokenData } from '../../../domain/model/AuthTokenData';
 
 @injectable()
 export class AuthRepositoImpl implements AuthRepository {
@@ -21,7 +22,7 @@ export class AuthRepositoImpl implements AuthRepository {
     register(registerDTO: RegisterDTO): Promise<UserData> {
         return this.authDataSource.register(registerDTO);
     }
-    getUserByToken(token: string): Promise<UserData> {
-        return this.authDataSource.getUserByToken(token);
+    getUserByToken(authTokenData: AuthTokenData): Promise<UserData> {
+        return this.authDataSource.getUserByToken(authTokenData);
     }
 }

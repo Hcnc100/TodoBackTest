@@ -19,6 +19,11 @@ import { TodoDAO } from "../domain/daos/todo/TodoDAO";
 import { TodoData } from "../domain/model/Todo.data";
 import { envs } from "../config/envs";
 import { AuthController } from "../presentation/auth/auth.controller";
+import { TodoDataSource } from "../domain/datasource/todo/TodoDataSource";
+import { TodoDataSourceImpl } from "../infrastructure/datasource/todo/TodoDataSourceImpl";
+import { TodoRepository } from '../domain/repository/TodoRepository';
+import { TodoRepoImpl } from "../infrastructure/repository/todo/TodoRepositoryImpl";
+import { TodoController } from "../presentation/todo/todo.controller";
 
 
 
@@ -40,7 +45,9 @@ myContainer.bind<AuthRepository>(TYPES.AuthRepository).to(AuthRepositoImpl).inSi
 myContainer.bind<AuthController>(TYPES.AuthController).to(AuthController).inSingletonScope();
 
 myContainer.bind<TodoDAO>(TYPES.TodoDAO).to(TodoDAOImpl).inSingletonScope();
-// myContainer.bind<TodoDataSource>(TYPES.TodoDataSource).to(TodoDataSourceImpl).inSingletonScope();
+myContainer.bind<TodoDataSource>(TYPES.TodoDataSource).to(TodoDataSourceImpl).inSingletonScope();
+myContainer.bind<TodoRepository>(TYPES.TodoRepository).to(TodoRepoImpl).inSingletonScope();
+myContainer.bind<TodoController>(TYPES.TodoController).to(TodoController).inSingletonScope();
 
 
 
